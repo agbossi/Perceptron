@@ -1,27 +1,3 @@
-#1. set b = w = 0
-#2. for N iterations, or until weights do not change
-#       (a) for each training example xᵏ with label yᵏ
-#           i. if yᵏ — f(xᵏ) = 0, continue
-#           ii. else, update wᵢ, △wᵢ = (yᵏ — f(xᵏ)) xᵢ
-
-#IMPLEMENTACION PRACTICA PERCEPTRON CATEDRA EN MATLAB
-#i = 0;
-#w = rand(N, 1) * 2 - 1;
-#error = 1;
-#errormin = p * 2;
-#whileerror>0∧i<COTA
-#if i<100∗n
-#w = rand(N, 1) * 2 - 1;
-#endix = ceil(rand(1, 1) * p);
-#exitacion = x(ix,:) * w;activacion = signo(exitacion);
-#∆w =α* (y(1,ix) - activacion) * x(ix,:)’;
-#w = w + ∆w;error = CalcularError(x, y, w, p);
-#if errorerror<errorminerrormin = error;
-#wmin = w;
-#endi = i + 1;
-#end
-
-
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
