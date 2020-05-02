@@ -23,18 +23,14 @@ def load_data_set():
 # xor_function = [['x', 'y', 'or'], [1, 1, 0], [0, 0, 0], [1, 0, 1], [0, 1, 1]]
 #and_data_set = np.array(and_function[1:])
 #mtr.print_and_data_set(and_data_set)
-#trained_weights, errors_per_epoch = md.incremental_perceptron(and_data_set, 10, 0.15, af.step_function)
+#trained_weights, errors_per_epoch = md.incremental_perceptron(and_data_set, 10, 0.15, af.step_function, "classification", 5)
 #mtr.converge_metric(10, errors_per_epoch)  # exploto porque errors aparecio con longitud 11
 #md.test_perceptron(trained_weights, and_data_set[:, :-1], af.step_function)
 
 df = load_data_set()
-input_list = rk.cross_validation_split(3, df)
+input_list = rs.train_test_split(df, 0.7)
+trained_weights, errors_per_epoch = md.batch_perceptron(input_list[0][0], 15, 0.15, af.sigmoid_function, "regression", 5)
+mtr.converge_metric(10, errors_per_epoch)
+md.test_perceptron(trained_weights, input_list[0][1], af.sigmoid_function())
 
-print(input_list[0][0])
-print(input_list[0][1])
 
-print(input_list[1][0])
-print(input_list[1][1])
-
-print(input_list[2][0])
-print(input_list[2][1])
