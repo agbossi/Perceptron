@@ -1,5 +1,5 @@
 import numpy as np
-# TODO hacer menos canceroso el codigo
+# Este esta cerrado !!!
 
 import ar.edu.itba.sia.group3.Metrics.Graphics as mtr
 import ar.edu.itba.sia.group3.Models.Perceptron_neuron as md  # no puedo traer el paquete?
