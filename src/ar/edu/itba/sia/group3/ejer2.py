@@ -16,24 +16,29 @@ def load_data_set():
     data = shuffle(data)
     return data.to_numpy()
 
-data_set = load_data_set()
-
-result = crossValidation.cross_validation_split(5, data_set)
-
-
-exit()
 activation_function = af.SigmoidFunction(0.5)
 features = 3
 iteration_limit = 70
 restart_condition = 5
 learning_rate = 0.2
-p = md.Perceptron(features, activation_function, "regression")
 
 df = load_data_set()
-input_list = rs.train_test_split(df, 0.7)
-trained_weights, errors_per_epoch = p.batch_training(input_list[0][0], learning_rate, restart_condition, iteration_limit, True)
-mtr.converge_metric(iteration_limit, errors_per_epoch)
-p.test_perceptron(input_list[0][1])
+
+input_list_of_list = crossValidation.cross_validation_split(5, df)
+# input_list_of_list = rs.train_test_split(df, 0.7)
+
+results = []
+for input_list in input_list_of_list:
+    p = md.Perceptron(features, activation_function, "regression")
+    trained_weights, errors_per_epoch = p.batch_training(input_list[0],
+                                                         learning_rate, restart_condition, iteration_limit, True)
+    # mtr.converge_metric(iteration_limit, errors_per_epoch)
+    error = p.test_perceptron(input_list[1], True)
+    results.append([trained_weights, errors_per_epoch, error])
+
+results = np.array(results)
+## TODO tratar de graficar todos los resultados en unico grafico o algo asi?
+
 
 # TODO preguntar si esta todo ok usar numpy y sklearn al estar usando cosas triviales
 
