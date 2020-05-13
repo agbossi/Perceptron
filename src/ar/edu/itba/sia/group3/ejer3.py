@@ -3,6 +3,7 @@ import numpy as np
 
 import ar.edu.itba.sia.group3.Metrics.Graphics as mtr
 import ar.edu.itba.sia.group3.Models.Perceptron_neuron as md  # no puedo traer el paquete?
+import ar.edu.itba.sia.group3.Models.Multi_layer_perceptron as mdL
 import ar.edu.itba.sia.group3.Functions.Activation_Functions as af
 import src.ar.edu.itba.sia.group3.Resamplers.Train_test_split as rs
 import src.ar.edu.itba.sia.group3.Resamplers.K_fold_cross_validation as rk
@@ -17,27 +18,28 @@ def load_data_set():
     data = shuffle(data)
     return data.to_numpy()
 
+xor_function = [['x', 'y', 'or'], [1, 1, 0], [0, 0, 0], [1, 0, 1], [0, 1, 1]]
+xor_data_set = np.array(xor_function[1:])
 
-# or_function = [['x', 'y', 'or'], [1, 1, 1], [1, 0, 1], [0, 1, 1], [0, 0, 0]]
-and_function = [['x', 'y', 'or'], [1, 0, 0], [0, 1, 0], [0, 0, 0], [1, 1, 1]]
-# xor_function = [['x', 'y', 'or'], [1, 1, 0], [0, 0, 0], [1, 0, 1], [0, 1, 1]]
-and_data_set = np.array(and_function[1:])
-#mtr.print_and_data_set(and_data_set)
 #activation_function = af.SigmoidFunction(0.5)
 activation_function = af.StepFunction()
+
 features = 2
 iteration_limit = 40
 restart_condition = 5
 learning_rate = 0.2
-p = md.Perceptron(features, activation_function, "classification")
-trained_weights, errors_per_epoch = p.batch_training(and_data_set, learning_rate, restart_condition, iteration_limit)
-mtr.converge_metric(iteration_limit, errors_per_epoch)  # exploto porque errors aparecio con longitud 11
-p.test_perceptron(and_data_set)
+## Set up layers for neural network
+layer_info_list = [
+    mdL.LayerInfo(activation_function, 3, 2),
+    mdL.LayerInfo(activation_function, 2, 3),
+    mdL.LayerInfo(activation_function, 1, 2)
+]
 
-#df = load_data_set()
-#input_list = rs.train_test_split(df, 0.7)
-#trained_weights, errors_per_epoch = p.batch_training(input_list[0][0], learning_rate, restart_condition, iteration_limit, True)
-#mtr.converge_metric(iteration_limit, errors_per_epoch)
-#p.test_perceptron(input_list[0][1])
+## Create and runs neural network
+p = mdL.MultiLayerPerceptron(2, layer_info_list, 1)
+trained_weights, errors_per_epoch = p.feed_forward(xor_data_set)
+# mtr.converge_metric(iteration_limit, errors_per_epoch)  # exploto porque errors aparecio con longitud 11
+# p.test_perceptron(and_data_set)
+
 
 
