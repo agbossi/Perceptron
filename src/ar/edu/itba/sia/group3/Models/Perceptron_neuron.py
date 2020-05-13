@@ -37,6 +37,16 @@ class Perceptron:
         else:
             return activation, error
 
+    def run_multilayer(self, sigmas):
+        x = np.array(sigmas)
+        x = np.append(x, [1])  # agrego el 1 del bias
+        excitement = np.dot(self.weights, x.transpose())
+        # activation = self.activation_function.get_value(self.normalizator.normalize(excitement[0])) TODO
+        activation = self.activation_function.get_value(excitement[0])
+        # activation = self.normalizator.revert_normalization(activation) TODO
+
+        return activation
+
     def check_restart(self, restart_condition):
         if self.restart_count > restart_condition:
             self.weights = np.random.rand((1, len(self.weights)))

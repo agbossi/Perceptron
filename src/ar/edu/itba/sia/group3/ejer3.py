@@ -31,13 +31,12 @@ learning_rate = 0.2
 ## Set up layers for neural network
 layer_info_list = [
     mdL.LayerInfo(activation_function, 3, 2),
-    mdL.LayerInfo(activation_function, 2, 3),
-    mdL.LayerInfo(activation_function, 1, 2)
+    mdL.LayerInfo(activation_function, 1, 3)
 ]
 
 ## Create and runs neural network
 p = mdL.MultiLayerPerceptron(2, layer_info_list, 1)
-trained_weights, errors_per_epoch = p.feed_forward(xor_data_set)
+p.feed_forward(xor_data_set)
 # mtr.converge_metric(iteration_limit, errors_per_epoch)  # exploto porque errors aparecio con longitud 11
 # p.test_perceptron(and_data_set)
 

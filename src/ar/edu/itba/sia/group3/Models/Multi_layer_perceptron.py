@@ -14,17 +14,17 @@ class MultiLayerPerceptron:
         self.targets = output_neurons
 
     def feed_forward(self, training_set):
-        neuron_input = training_set
-        elem = np.zeros(shape=(1, len(neuron_input[0])))
-        elem = neuron_input
-        output = training_set[:, -1:]
-        error = 0
         for training_example in training_set:
-            elem = np.zeros(shape=(1, len(training_example))) # creo que tendria que ser de la capa siguiente, ver de donde sacarlo
+            ## aca voy hacia adelante
+            elem = [training_example[:-1].tolist()]
             for i in range(len(self.layers)):
-                neuron_input = elem  # aca necesito el nextInput
+                elem.append(np.zeros(len(self.layers[i].neurons)).tolist())
                 for j in range(len(self.layers[i].neurons)):
-                    elem[j], error = self.layers[i].neurons[j].run(input, "training")
+                    elem[i+1][j] = self.layers[i].neurons[j].run_multilayer(np.array(elem[i]))
+
+            ## ya tengo en elem la salida de la ultima capa, ahora corrijo pesos hacia atras
+
+
 
 
 class Layer:
