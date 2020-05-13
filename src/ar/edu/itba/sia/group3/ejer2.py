@@ -33,19 +33,19 @@ for input_list in input_list_of_list:
     trained_weights, errors_per_epoch = p.batch_training(input_list[0],
                                                          learning_rate, restart_condition, iteration_limit, True)
     # mtr.converge_metric(iteration_limit, errors_per_epoch)
-    error = p.test_perceptron(input_list[1], True)
-    results.append([trained_weights, errors_per_epoch, error])
+    error, sqrError = p.test_perceptron(input_list[1], True)
+    results.append([trained_weights, errors_per_epoch, sqrError])
 
 results = np.array(results)
-## TODO tratar de graficar todos los resultados en unico grafico o algo asi?
 
+exit()
+# TODO tratar de graficar todos los resultados en unico grafico o algo asi?
 
 # TODO preguntar si esta todo ok usar numpy y sklearn al estar usando cosas triviales
 
-# TODO add cross validation --> arma varios split de training data y datos posta: falta agregar los sobrantes cuando el K no es divisor al ultimo conjunto
+# TODO add cross validation --> ya nos funciona ahora q mierda hacemos?
 
-# TODO add bootstraping --> esto hay que hacerlo? muy poco contendio. pedir que lo expliquen de nuevo?
-
+# TODO add bootstraping --> esto hay que hacerlo? muy poco contenido. pedir que lo expliquen de nuevo?
 
 # PREGUNTAS
 #¿Co ́mo podr ́ıa escoger el mejor conjunto de entrenamiento?

@@ -85,14 +85,15 @@ class Perceptron:
         return self.min_weights, errors_per_epoch
 
     def test_perceptron(self, testing_set, silent = False):
-        error = 0
+        halfwaySquareError = 0
         self.error = 0
         for testing_example in testing_set:
             output, error = self.run(testing_example, "testing")
             if not silent:
                 print("neuron answer for parameters: ", np.array_str(testing_example), " is ", output, " real answer is ", testing_example[-1])
             self.error += error
-        return self.error
+            halfwaySquareError += np.square(testing_example[-1] - output)
+        return self.error, halfwaySquareError/2
 
 
 def error_handling(errors, error, iteration, min_error, min_weights, weights, cost_count):
