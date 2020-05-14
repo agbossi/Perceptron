@@ -20,6 +20,7 @@ class Perceptron:
         self.restart_count = 0
         self.learning_rate = 0
         self.normalizator = None
+        self.last_activation_value = 0
 
     def run(self, training_example, run_mode):
         x = np.array(training_example[:-1])  # training menos label
@@ -40,9 +41,9 @@ class Perceptron:
     def run_multilayer(self, sigmas):
         x = np.array(sigmas)
         x = np.append(x, [1])  # agrego el 1 del bias
-        excitement = np.dot(self.weights, x.transpose())
+        self.last_activation_value = np.dot(self.weights, x.transpose())
         # activation = self.activation_function.get_value(self.normalizator.normalize(excitement[0])) TODO
-        activation = self.activation_function.get_value(excitement[0])
+        activation = self.activation_function.get_value(self.last_activation_value[0])
         # activation = self.normalizator.revert_normalization(activation) TODO
 
         return activation
