@@ -1,3 +1,5 @@
+import sys
+
 import numpy as np
 
 from ar.edu.itba.sia.group3.Models.Perceptron_neuron import Perceptron
@@ -8,6 +10,7 @@ class MultiLayerPerceptron:
         self.features = input_neurons
         self.hidden_layers = len(neurons_info)
         self.layers = []
+        self.error = sys.maxsize
         for layer_info in neurons_info:
             layer = Layer(layer_info.neurons_amount, layer_info.connections, layer_info.activation_function)
             self.layers.append(layer)
@@ -31,7 +34,9 @@ class MultiLayerPerceptron:
                 neuron = self.layers[i].neurons[j]
                 if i == len(self.layers) - 1:
                     # aca asumimos una neurona al final,,,,ponele...
-                    delta_minuscula = (elem[-1][0] - training_example[-1]) * neuron.activation_function.get_derivative(
+                    error = (training_example[-1] - elem[-1][0])
+                    self.error += abs(error)
+                    delta_minuscula = error * neuron.activation_function.get_derivative(
                         neuron.last_activation_value)
                     delta_minuscula_ary_layer.append(delta_minuscula)
                 else:
@@ -49,12 +54,16 @@ class MultiLayerPerceptron:
             delta_minuscula_ary.append(delta_minuscula_ary_layer)  # agrego los miniDeltas de esta layer al ary de deltas
 
     # hace una ida, backprogation y repite. Realiza una epoca entera (pasar por dataset completo)
-    def incremental_training(self, training_set):
-        for training_example in training_set:
-            ## aca voy hacia adelante
-            elem = self.feed_forward(training_example)
-            ## de reversa
-            self.back_propagation(training_example, elem)
+    def incremental_training(self, training_set, max_iterations):
+        iterations = 0
+        while self.error > 0 and iterations < max_iterations:
+            self.error = 0
+            for training_example in training_set:
+                ## aca voy hacia adelante
+                elem = self.feed_forward(training_example)
+                ## de reversa
+                self.back_propagation(training_example, elem)
+                iterations += 1
 
 
     def test(self, testing_set, silent = False):
@@ -62,7 +71,13 @@ class MultiLayerPerceptron:
         self.error = 0
         for testing_example in testing_set:
             outputs_neuronas = self.feed_forward(testing_example)
+         #   if outputs_neuronas > 0.5:
+
             output = np.array(outputs_neuronas[len(outputs_neuronas)-1])
+#            if output[0] > 0.5:
+#                output[0] = 0
+#            else:
+#                output[0] = 1
             if not silent:
                 print("network answer for parameters: ", np.array_str(testing_example), " is ", np.array_str(output), " real answer is ", testing_example[-1])
             # self.error += error
