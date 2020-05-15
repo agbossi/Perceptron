@@ -38,21 +38,15 @@ class MultiLayerPerceptron:
                     pesos_anteriores = []
                     for aux in range(len(self.layers[i + 1].neurons)):
                         pesos_anteriores.append(self.layers[i + 1].neurons[aux].weights[0][j])  # TODO chequear este J
-                    delta_minuscula_anteriores = delta_minuscula_ary[
-                        -(i + 1)]  # agarro los deltas de la capa siguiente, recordar q esta invertido
+                    delta_minuscula_anteriores = delta_minuscula_ary[(len(self.layers)-2)-i]  # agarro los deltas de la capa siguiente, recordar que esta invertido. ultimo delta en primera ṕosicion y primer delta en la ultima
                     delta_minuscula = neuron.activation_function.get_derivative(neuron.last_activation_value) * (
                         np.dot(np.array(pesos_anteriores), np.array(delta_minuscula_anteriores)))
                     delta_minuscula_ary_layer.append(delta_minuscula)
                 for wi in reversed(range(len(neuron.weights[0]) - 1)):
-                    if i == 0:  # cuando esta en el principio de la red, ya no tiene que agarrar pesos sino directamente el input
-                        V = training_example[wi]
-                    else:
-                        V = elem[i - 1][wi]
-
+                    V = elem[i][wi] # en elem[0][] esta el input. elem[1][] son salidas de la capa real 1. como en la estructura de la neurona hay solo perceptrones posta, elem esta desfazado respecto de la capa i
                     delta = neuron.learning_rate * delta_minuscula * V
                     neuron.weights[0][wi] += delta
-            delta_minuscula_ary.append(
-                delta_minuscula_ary_layer)  # agrego los miniDeltas de esta layer al ary de deltas
+            delta_minuscula_ary.append(delta_minuscula_ary_layer)  # agrego los miniDeltas de esta layer al ary de deltas
 
     # hace una ida, backprogation y repite. Realiza una epoca entera (pasar por dataset completo)
     def incremental_training(self, training_set):
