@@ -25,7 +25,7 @@ activation_function = af.SigmoidFunction(0.5)
 #activation_function = af.StepFunction()
 
 features = 2
-iteration_limit = 5
+iteration_limit = 40
 restart_condition = 15
 learning_rate = 0.2
 ## Set up layers for neural network
@@ -35,7 +35,7 @@ layer_info_list = [
 ]
 
 ## Create and runs neural network
-p = mdL.MultiLayerPerceptron(2, layer_info_list, 1)
+p = mdL.MultiLayerPerceptron(2, layer_info_list, 1, learning_rate)
 p.incremental_training(xor_data_set, iteration_limit)
 p.test(xor_data_set)
 # mtr.converge_metric(iteration_limit, errors_per_epoch)  # exploto porque errors aparecio con longitud 11
