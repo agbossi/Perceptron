@@ -24,10 +24,13 @@ class MultiLayerPerceptron:
     def feed_forward(self, training_example):
         ## aca voy hacia adelante
         elem = [training_example[:-1].tolist()]
+        elem[0].append(1)
         for i in range(len(self.layers)):
-            elem.append(np.zeros(len(self.layers[i].neurons)).tolist())
+            elem.append(np.zeros(len(self.layers[i].neurons)).tolist())  # dejo lugar para "salida" umbral
             for j in range(len(self.layers[i].neurons)):
                 elem[i + 1][j] = self.layers[i].neurons[j].run_multilayer(np.array(elem[i]))
+            elem[i+1].append(1)
+        elem[-1].pop(-1)
         return elem
 
     def back_propagation(self, training_example, elem):
@@ -51,12 +54,12 @@ class MultiLayerPerceptron:
                         pesos_anteriores.append(self.layers[i + 1].neurons[aux].weights[0][j])  # TODO chequear este J
                     delta_minuscula_anteriores = delta_minuscula_ary[(len(self.layers)-2)-i]  # agarro los deltas de la capa siguiente, recordar que esta invertido. ultimo delta en primera ṕosicion y primer delta en la ultima
                     delta_minuscula = neuron.activation_function.get_derivative(neuron.last_activation_value) * (
-                        np.dot(np.array(pesos_anteriores), np.array(delta_minuscula_anteriores)))[0]
+                        np.dot(np.array(pesos_anteriores), np.array(delta_minuscula_anteriores)))
                     delta_minuscula_ary_layer.append(delta_minuscula)
-                for wi in reversed(range(len(neuron.weights[0]) - 1)):
+                for wi in reversed(range(len(neuron.weights[0]))):
                     V = elem[i][wi] # en elem[0][] esta el input. elem[1][] son salidas de la capa real 1. como en la estructura de la neurona hay solo perceptrones posta, elem esta desfazado respecto de la capa i
-                    delta = self.learning_rate * delta_minuscula[0] * V + self.momentum * self.delta_ary[i][j][wi]
-                    self.delta_ary[i][j][wi] = delta # persisto el nuevo delta de esta arista
+                    delta = self.learning_rate * delta_minuscula * V #+ self.momentum * self.delta_ary[i][j][wi]
+                    self.delta_ary[i][j] = delta # persisto el nuevo delta de esta arista. borre un [wi] en delta
                     neuron.weights[0][wi] += delta
             delta_minuscula_ary.append(delta_minuscula_ary_layer)  # agrego los miniDeltas de esta layer al ary de deltas
 

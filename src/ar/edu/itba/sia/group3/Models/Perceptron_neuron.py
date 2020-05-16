@@ -40,10 +40,10 @@ class Perceptron:
 
     def run_multilayer(self, sigmas):
         x = np.array(sigmas)
-        x = np.append(x, [1])  # agrego el 1 del bias
-        self.last_activation_value = np.dot(self.weights, x.transpose())
+       # x = np.append(x, [1])  # agrego el 1 del bias
+        self.last_activation_value = np.dot(self.weights[0], x.transpose())
         # activation = self.activation_function.get_value(self.normalizator.normalize(excitement[0])) TODO
-        activation = self.activation_function.get_value(self.last_activation_value[0])
+        activation = self.activation_function.get_value(self.last_activation_value)
         # activation = self.normalizator.revert_normalization(activation) TODO
 
         return activation
