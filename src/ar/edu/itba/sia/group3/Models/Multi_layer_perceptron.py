@@ -6,15 +6,19 @@ from ar.edu.itba.sia.group3.Models.Perceptron_neuron import Perceptron
 
 
 class MultiLayerPerceptron:
-    def __init__(self, input_neurons, neurons_info, output_neurons, learning_rate):  # hidden_neurons_info pensado como lista de layerInfo. cada lista con cantidad de neuronas e info para neuronas de cada capa
+    def __init__(self, input_neurons, neurons_info, output_neurons, learning_rate, momentum):  # hidden_neurons_info pensado como lista de layerInfo. cada lista con cantidad de neuronas e info para neuronas de cada capa
         self.features = input_neurons
         self.hidden_layers = len(neurons_info)
         self.layers = []
         self.error = sys.maxsize
         self.learning_rate = learning_rate
+        self.momentum = momentum
+        self.delta_ary = [] # used for saving deltas for momentum
         for layer_info in neurons_info:
             layer = Layer(layer_info.neurons_amount, layer_info.connections, layer_info.activation_function)
             self.layers.append(layer)
+            # stuff for delta ary
+            self.delta_ary.append(np.zeros((layer_info.neurons_amount, layer_info.connections)))
         self.targets = output_neurons
 
     def feed_forward(self, training_example):
@@ -40,6 +44,7 @@ class MultiLayerPerceptron:
                     delta_minuscula = error * neuron.activation_function.get_derivative(
                         neuron.last_activation_value)
                     delta_minuscula_ary_layer.append(delta_minuscula)
+
                 else:
                     pesos_anteriores = []
                     for aux in range(len(self.layers[i + 1].neurons)):
@@ -50,16 +55,17 @@ class MultiLayerPerceptron:
                     delta_minuscula_ary_layer.append(delta_minuscula)
                 for wi in reversed(range(len(neuron.weights[0]) - 1)):
                     V = elem[i][wi] # en elem[0][] esta el input. elem[1][] son salidas de la capa real 1. como en la estructura de la neurona hay solo perceptrones posta, elem esta desfazado respecto de la capa i
-                    delta = self.learning_rate * delta_minuscula[0] * V
+                    delta = self.learning_rate * delta_minuscula[0] * V + self.momentum * self.delta_ary[i][j][wi]
+                    self.delta_ary[i][j][wi] = delta # persisto el nuevo delta de esta arista
                     neuron.weights[0][wi] += delta
             delta_minuscula_ary.append(delta_minuscula_ary_layer)  # agrego los miniDeltas de esta layer al ary de deltas
 
     # hace una ida, backprogation y repite. Realiza una epoca entera (pasar por dataset completo)
     def incremental_training(self, training_set, max_iterations):
         iterations = 0
+        last_error = 0
         while self.error > 0 and iterations < max_iterations:
             self.error = 0
-
             for training_example in training_set:
                 ## aca voy hacia adelante
                 elem = self.feed_forward(training_example)

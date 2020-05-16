@@ -16,7 +16,7 @@ class StepFunction:
             return 0
 
     def get_derivative(self, value):
-        return 1  # esto casi seguro esta mal
+        return np.array([1])  # esto casi seguro esta mal
 
 
 class SigmoidFunction:
