@@ -19,7 +19,7 @@ def cross_validation_split(k, data_set):
     # the list of splits to populate and return
     fold_set = []
     for i in range(k):  # si ds es por ejemplo 10, k es 3, hay un dato que me queda fuera de todos, me lo meto en orto?
-        training_set = np.array([[0, 0, 0, 0]])  # para que concatenate no explote, no encontre algo mejor
+        training_set = np.array([np.zeros(len(data_set[0])).tolist()])  # para que concatenate no explote, no encontre algo mejor
         for j in range(k):
             # con esto hacemos la diagonal que hay en el PPT haciendo que saltea el de la diagonal pq
             # sera el de testeo y el resto sera training en cada iter
