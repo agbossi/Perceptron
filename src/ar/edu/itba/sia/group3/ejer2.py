@@ -34,9 +34,15 @@ for input_list in input_list_of_list:
                                                          learning_rate, restart_condition, iteration_limit, True)
     # mtr.converge_metric(iteration_limit, errors_per_epoch)
     error, sqrError = p.test_perceptron(input_list[1], True)
-    results.append([trained_weights, errors_per_epoch, sqrError])
+    results.append([input_list[1], errors_per_epoch, sqrError])
 
 results = np.array(results)
+
+split_num = 1
+for result in results:
+    print("neuron answer for split ", split_num, " has ",result[2]," square error")
+    split_num +=1
+
 
 exit()
 # TODO tratar de graficar todos los resultados en unico grafico o algo asi?
