@@ -2,6 +2,7 @@ import sys
 
 import numpy as np
 from sklearn.utils import shuffle
+import ar.edu.itba.sia.group3.Metrics.Confusion_matrix as m
 
 from ar.edu.itba.sia.group3.Models.Perceptron_neuron import Perceptron
 
@@ -78,24 +79,32 @@ class MultiLayerPerceptron:
                 self.back_propagation(training_example, elem)
             iterations += 1
 
+    def test_classification(self, testing_set, classifications, silent=False):
+        confusion_matrix = m.ConfusionMatrix(classifications)
+        for testing_example in testing_set:
+            outputs_neuronas = self.feed_forward(testing_example)
+            output = outputs_neuronas[len(outputs_neuronas) - 1][0]
+            if output >= 0.5:
+                output = 1
+            else:
+                output = 0
+            confusion_matrix.add_entry(testing_example[-1], output)
+            if not silent:
+                print(np.array_str(testing_example), " is ", output)
+        confusion_matrix.summarize()
+        return confusion_matrix
 
-    def test(self, testing_set, silent = False):
-        halfwaySquareError = 0
+    def test_regression(self, testing_set, silent=False):
+        halfway_square_error = 0
         self.error = 0
         for testing_example in testing_set:
             outputs_neuronas = self.feed_forward(testing_example)
-         #   if outputs_neuronas > 0.5:
-
-            output = np.array(outputs_neuronas[len(outputs_neuronas)-1])
-#            if output[0] > 0.5:
-#                output[0] = 0
-#            else:
-#                output[0] = 1
+            output = np.array(outputs_neuronas[len(outputs_neuronas) - 1])
             if not silent:
                 print(np.array_str(testing_example), " is ", np.array_str(output))
-            # self.error += error
-            # halfwaySquareError += np.square(testing_example[-1] - output)
-
+                # self.error += error
+            halfway_square_error += np.square(testing_example[-1] - output)
+        return halfway_square_error / len(testing_set)
 
 
 class Layer:
