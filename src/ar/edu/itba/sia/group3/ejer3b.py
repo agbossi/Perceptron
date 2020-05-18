@@ -20,7 +20,6 @@ primos_data_set = \
 primos_data_set = np.array(primos_data_set)
 
 activation_function = af.SigmoidFunction(.2)
-# activation_function = af.StepFunction()
 
 features = 35
 iteration_limit = 5000

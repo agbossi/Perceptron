@@ -61,7 +61,7 @@ class MultiLayerPerceptron:
                 for wi in reversed(range(len(neuron.weights[0]))):
                     V = elem[i][wi] # en elem[0][] esta el input. elem[1][] son salidas de la capa real 1. como en la estructura de la neurona hay solo perceptrones posta, elem esta desfazado respecto de la capa i
                     delta = self.learning_rate * delta_minuscula * V + self.momentum * self.delta_ary[i][j][wi]
-                    self.delta_ary[i][j] = delta # persisto el nuevo delta de esta arista. borre un [wi] en delta
+                    self.delta_ary[i][j] = delta # persisto el nuevo delta de esta arista
                     neuron.weights[0][wi] += delta
             delta_minuscula_ary.append(delta_minuscula_ary_layer)  # agrego los miniDeltas de esta layer al ary de deltas
 
@@ -104,7 +104,7 @@ class MultiLayerPerceptron:
                 print(np.array_str(testing_example), " is ", np.array_str(output))
                 # self.error += error
             halfway_square_error += np.square(testing_example[-1] - output)
-        return halfway_square_error / len(testing_set)
+        return halfway_square_error / 2
 
 
 class Layer:

@@ -16,7 +16,7 @@ class StepFunction:
             return 0
 
     def get_derivative(self, value):
-        return np.array([1])  # esto casi seguro esta mal
+        return np.array([1])  # no se usa la derivada de step pero para respetar interfaz
 
 
 class SigmoidFunction:
@@ -31,6 +31,3 @@ class SigmoidFunction:
         z = 2 * self.beta * self.get_value(value) * (1 - self.get_value(value))
         return z
 
-
-def ReLU(value):
-    return max(0, value)

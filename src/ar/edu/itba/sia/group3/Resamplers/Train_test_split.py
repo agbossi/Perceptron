@@ -1,4 +1,4 @@
-# returns a list? with one training set and one testing set
+# returns a list with one training set and one testing set
 def train_test_split(data_set, training_percent):
     sets = []
 

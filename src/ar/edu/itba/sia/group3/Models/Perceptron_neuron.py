@@ -2,7 +2,6 @@ import sys
 
 import numpy as np
 from sklearn.utils import shuffle
-# falta la normalizacion para el punto dos
 from ar.edu.itba.sia.group3.Functions.Other_functions import Normalizator
 
 
@@ -15,7 +14,6 @@ class Perceptron:
         self.activation_function = activation_function
         self.problem_type = problem_type
         self.delta = np.zeros(features_amount + 1)
-        # variables que no voy a usar hasta que no corra pero sino inicializo aca no se como hacer
         self.restart_condition = 0
         self.restart_count = 0
         self.learning_rate = 0
@@ -40,11 +38,10 @@ class Perceptron:
 
     def run_multilayer(self, sigmas):
         x = np.array(sigmas)
-       # x = np.append(x, [1])  # agrego el 1 del bias
         self.last_activation_value = np.dot(self.weights[0], x.transpose())
-        # activation = self.activation_function.get_value(self.normalizator.normalize(excitement[0])) TODO
+        # activation = self.activation_function.get_value(self.normalizator.normalize(excitement[0])) TODO no hace falta por los tipos de problemas
         activation = self.activation_function.get_value(self.last_activation_value)
-        # activation = self.normalizator.revert_normalization(activation) TODO
+        # activation = self.normalizator.revert_normalization(activation)
 
         return activation
 
@@ -104,8 +101,8 @@ class Perceptron:
                 print("neuron answer for parameters: ", np.array_str(testing_example), " is ", output, " real answer is ", testing_example[-1])
             self.error += error
             halfwaySquareError += np.square(testing_example[-1] - output)
-        print("n=",len(testing_set))
-        return self.error, halfwaySquareError/(len(testing_set)) # TODO esto esta ok? o dividido dos? en google es con N asi
+        print("n=", len(testing_set))
+        return self.error, halfwaySquareError/2
 
 
 def error_handling(errors, error, iteration, min_error, min_weights, weights, cost_count):
