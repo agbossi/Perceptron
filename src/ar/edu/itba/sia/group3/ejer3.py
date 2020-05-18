@@ -42,6 +42,7 @@ layer_info_list = [
 ## Create and runs neural network
 p = mdL.MultiLayerPerceptron(2, layer_info_list, 1, learning_rate, momentum)
 p.incremental_training(xor_data_set, iteration_limit)
-p.test_classification(xor_data_set, classifications)
+confusion = p.test_classification(xor_data_set, classifications)
+print(confusion.get_accuracies())
 # mtr.converge_metric(iteration_limit, errors_per_epoch)  # exploto porque errors aparecio con longitud 11
 # p.test_perceptron(and_data_set)

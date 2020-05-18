@@ -57,8 +57,8 @@ class ConfusionMatrix:
         return precisions
 
     def get_precision(self, index):
-        precision = ((self.stats_matrix[index][MatrixComponents.true_positive.value] + self.stats_matrix[index][MatrixComponents.true_negative.value])
-                     / (self.stats_matrix[index][MatrixComponents.true_positive.value] + self.stats_matrix[index][MatrixComponents.true_negative.value] + self.stats_matrix[index][MatrixComponents.false_negative.value] + self.stats_matrix[index][MatrixComponents.false_positive.value]))
+        precision = ((self.stats_matrix[index][1+MatrixComponents.true_positive.value] + self.stats_matrix[index][1+MatrixComponents.true_negative.value])
+                     / (self.stats_matrix[index][1+MatrixComponents.true_positive.value] + self.stats_matrix[index][1+MatrixComponents.true_negative.value] + self.stats_matrix[index][1+MatrixComponents.false_negative.value] + self.stats_matrix[index][1+MatrixComponents.false_positive.value]))
         return precision
 
     def get_accuracies(self):
@@ -72,10 +72,10 @@ class ConfusionMatrix:
 
     def get_accuracy(self, index):
         accuracy = \
-            self.stats_matrix[index][MatrixComponents.true_positive.value] \
+            self.stats_matrix[index][1+MatrixComponents.true_positive.value] \
             / (
-                    self.stats_matrix[index][MatrixComponents.true_positive.value]
-                    + self.stats_matrix[index][MatrixComponents.false_positive.value]
+                    self.stats_matrix[index][1+MatrixComponents.true_positive.value]
+                    + self.stats_matrix[index][1+MatrixComponents.false_positive.value]
             )
         return accuracy
 
@@ -89,7 +89,7 @@ class ConfusionMatrix:
         return recalls
 
     def get_recall(self, index):
-        recall = self.stats_matrix[index][MatrixComponents.true_positive.value] / (self.stats_matrix[index][MatrixComponents.true_positive.value] + self.stats_matrix[index][MatrixComponents.false_negative.value])
+        recall = self.stats_matrix[index][1+MatrixComponents.true_positive.value] / (self.stats_matrix[index][1+MatrixComponents.true_positive.value] + self.stats_matrix[index][1+MatrixComponents.false_negative.value])
         return recall
 
     def get_f1_scores(self):
