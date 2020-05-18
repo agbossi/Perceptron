@@ -50,7 +50,7 @@ class Perceptron:
 
     def check_restart(self, restart_condition):
         if self.restart_count > restart_condition:
-            self.weights = np.random.rand((len(self.weights)))
+            self.weights = np.random.rand(1, len(self.weights[0]))
 
     def batch_training(self, training_set, learning_rate, restart_condition, iteration_limit, need_to_normalize=False):  # matriz el conjunto)
         if need_to_normalize:

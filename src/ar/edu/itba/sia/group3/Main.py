@@ -21,5 +21,5 @@ learning_rate = 0.9
 p = md.Perceptron(features, activation_function, "classification")
 trained_weights, errors_per_epoch = p.batch_training(xor_data_set, learning_rate, restart_condition, iteration_limit)
 mtr.converge_metric(iteration_limit, errors_per_epoch)  # exploto porque errors aparecio con longitud 11
-p.test_perceptron(and_data_set)
+p.test_perceptron(xor_data_set)
 
