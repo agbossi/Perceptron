@@ -1,12 +1,6 @@
 import numpy as np
-# TODO hacer menos canceroso el codigo
-
-import ar.edu.itba.sia.group3.Metrics.Graphics as mtr
-import ar.edu.itba.sia.group3.Models.Perceptron_neuron as md  # no puedo traer el paquete?
 import ar.edu.itba.sia.group3.Models.Multi_layer_perceptron as mdL
 import ar.edu.itba.sia.group3.Functions.Activation_Functions as af
-import src.ar.edu.itba.sia.group3.Resamplers.Train_test_split as rs
-import src.ar.edu.itba.sia.group3.Resamplers.K_fold_cross_validation as rk
 import pandas as pd
 from os.path import expanduser as ospath
 from sklearn.utils import shuffle
@@ -25,10 +19,10 @@ activation_function = af.SigmoidFunction(2)
 #activation_function = af.StepFunction()
 
 features = 2
-iteration_limit = 10000
+iteration_limit = 5000
 # restart_condition = 15
-learning_rate = 0.1
-momentum = 0.8 # cero to disable momentum
+learning_rate = 0.5
+momentum = 0.5 # cero to disable momentum
 ## Set up layers for neural network
 layer_info_list = [
     mdL.LayerInfo(activation_function, 3, 2),

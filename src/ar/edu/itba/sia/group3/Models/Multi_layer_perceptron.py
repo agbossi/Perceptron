@@ -92,7 +92,7 @@ class MultiLayerPerceptron:
 #            else:
 #                output[0] = 1
             if not silent:
-                print("network answer for parameters: ", np.array_str(testing_example), " is ", np.array_str(output), " real answer is ", testing_example[-1])
+                print(np.array_str(testing_example), " is ", np.array_str(output))
             # self.error += error
             # halfwaySquareError += np.square(testing_example[-1] - output)
 
