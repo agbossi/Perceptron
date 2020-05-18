@@ -1,6 +1,7 @@
 import sys
 
 import numpy as np
+from sklearn.utils import shuffle
 
 from ar.edu.itba.sia.group3.Models.Perceptron_neuron import Perceptron
 
@@ -69,6 +70,7 @@ class MultiLayerPerceptron:
         last_error = 0
         while self.error > 0 and iterations < max_iterations:
             self.error = 0
+            training_set = shuffle(training_set)
             for training_example in training_set:
                 ## aca voy hacia adelante
                 elem = self.feed_forward(training_example)

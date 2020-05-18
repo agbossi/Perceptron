@@ -21,18 +21,18 @@ def load_data_set():
 xor_function = [['x', 'y', 'or'], [1, 1, 0], [0, 0, 0], [1, 0, 1], [0, 1, 1]]
 xor_data_set = np.array(xor_function[1:])
 
-activation_function = af.SigmoidFunction(0.5)
+activation_function = af.SigmoidFunction(2)
 #activation_function = af.StepFunction()
 
 features = 2
-iteration_limit = 15
+iteration_limit = 10000
 # restart_condition = 15
-learning_rate = 0.8
-momentum = 0 # cero to disable momentum
+learning_rate = 0.1
+momentum = 0.8 # cero to disable momentum
 ## Set up layers for neural network
 layer_info_list = [
-    mdL.LayerInfo(activation_function, 2, 2),
-    mdL.LayerInfo(activation_function, 1, 2)
+    mdL.LayerInfo(activation_function, 3, 2),
+    mdL.LayerInfo(activation_function, 1, 3)
 ]
 
 ## Create and runs neural network

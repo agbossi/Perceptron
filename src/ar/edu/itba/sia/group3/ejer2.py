@@ -24,7 +24,7 @@ learning_rate = 0.2
 
 df = load_data_set()
 
-input_list_of_list = crossValidation.cross_validation_split(5, df)
+input_list_of_list = crossValidation.cross_validation_split(2, df)
 # input_list_of_list = rs.train_test_split(df, 0.7)
 
 results = []

@@ -104,7 +104,8 @@ class Perceptron:
                 print("neuron answer for parameters: ", np.array_str(testing_example), " is ", output, " real answer is ", testing_example[-1])
             self.error += error
             halfwaySquareError += np.square(testing_example[-1] - output)
-        return self.error, halfwaySquareError/2
+        print("n=",len(testing_set))
+        return self.error, halfwaySquareError/(len(testing_set)) # TODO esto esta ok? o dividido dos? en google es con N asi
 
 
 def error_handling(errors, error, iteration, min_error, min_weights, weights, cost_count):
