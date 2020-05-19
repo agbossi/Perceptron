@@ -20,7 +20,7 @@ class MultiLayerPerceptron:
             layer = Layer(layer_info.neurons_amount, layer_info.connections, layer_info.activation_function)
             self.layers.append(layer)
             # stuff for delta ary
-            self.delta_ary.append(np.zeros((layer_info.neurons_amount, layer_info.connections)))
+            self.delta_ary.append(np.zeros((layer_info.neurons_amount, layer_info.connections+1))) #+1 por la umbral
         self.targets = output_neurons
 
     def feed_forward(self, training_example):
@@ -60,7 +60,7 @@ class MultiLayerPerceptron:
                     delta_minuscula_ary_layer.append(delta_minuscula)
                 for wi in reversed(range(len(neuron.weights[0]))):
                     V = elem[i][wi] # en elem[0][] esta el input. elem[1][] son salidas de la capa real 1. como en la estructura de la neurona hay solo perceptrones posta, elem esta desfazado respecto de la capa i
-                    delta = self.learning_rate * delta_minuscula * V #+ self.momentum * self.delta_ary[i][j][wi]
+                    delta = self.learning_rate * delta_minuscula * V + self.momentum * self.delta_ary[i][j][wi]
                     self.delta_ary[i][j] = delta # persisto el nuevo delta de esta arista. borre un [wi] en delta
                     neuron.weights[0][wi] += delta
             delta_minuscula_ary.append(delta_minuscula_ary_layer)  # agrego los miniDeltas de esta layer al ary de deltas
