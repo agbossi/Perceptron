@@ -8,9 +8,11 @@ If when running any dependency issues arise, `PIP` tool should be used for solvi
 Implemented and tested on `Python 3.7`
 
 ## Running
-Navigate to bundles root dir with `cd src/ar/edu/itba/sia/group3`.
+Navigate to bundles root dir.
 Next run each of the requested exercises. Each file name in this directory indicates the exercise.  
-All files can be configured inside. And run with `python file`
+All files can be configured inside. And run with `python file`.
+Pyton path must be set like `PYTHONPATH=src`.
+@see section on example runs
 
 ### Configurations
 - learning_rate => % of delta W to add to weighs on neural network
@@ -25,3 +27,6 @@ All files can be configured inside. And run with `python file`
  Firtst element is first hidden layer, the following are the remaining hidden layers in order. Final element is the output. All elements have 2 int parameters. First int is number of neurons in layer, second int is number of neurons or inputs in previous layer.
  
 ## Example runs
+From root directory.  
+`PYTHONPATH=src python3.7 src/ar/edu/itba/sia/group3/ejer1_and.py`  
+`PYTHONPATH=src python3.7 src/ar/edu/itba/sia/group3/ejer2.py`

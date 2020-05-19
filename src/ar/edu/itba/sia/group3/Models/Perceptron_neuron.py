@@ -65,7 +65,8 @@ class Perceptron:
             for training_example in training_set:
                 delta, error = self.run(training_example, "training")
                 self.error += error
-                self.delta += delta
+                # self.delta += delta # esto no funciona por cli. solo dios sabe y un chino en @see https://blog.csdn.net/weixin_39278265/article/details/85148974
+                np.add(self.delta, delta, out=self.delta, casting="unsafe")
             self.weights = np.add(self.weights, self.delta)
             self.min_error, self.min_weights, self.restart_count, errors_per_epoch = error_handling(errors_per_epoch, self.error, iteration_count, self.min_error, self.min_weights, self.weights, self.restart_count)
             iteration_count += 1

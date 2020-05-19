@@ -2,7 +2,7 @@ import numpy as np
 
 import ar.edu.itba.sia.group3.Models.Perceptron_neuron as md
 import ar.edu.itba.sia.group3.Functions.Activation_Functions as af
-import src.ar.edu.itba.sia.group3.Resamplers.K_fold_cross_validation as crossValidation
+import ar.edu.itba.sia.group3.Resamplers.K_fold_cross_validation as crossValidation
 import pandas as pd
 from sklearn.utils import shuffle
 
