@@ -71,7 +71,12 @@ class ConfusionMatrix:
         return accuracies
 
     def get_accuracy(self, index):
-        accuracy = self.stats_matrix[index][MatrixComponents.true_positive.value] / (self.stats_matrix[index][MatrixComponents.true_positive.value] + self.stats_matrix[index][MatrixComponents.false_positive.value])
+        accuracy = \
+            self.stats_matrix[index][MatrixComponents.true_positive.value] \
+            / (
+                    self.stats_matrix[index][MatrixComponents.true_positive.value]
+                    + self.stats_matrix[index][MatrixComponents.false_positive.value]
+            )
         return accuracy
 
     def get_recalls(self):
